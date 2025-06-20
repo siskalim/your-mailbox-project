@@ -1,5 +1,6 @@
 const Email = require('../models/Email');
 
+// Simpan email baru
 exports.receiveEmail = async (req, res) => {
   const { to, subject, message } = req.body;
 
@@ -12,12 +13,24 @@ exports.receiveEmail = async (req, res) => {
   }
 };
 
+// Tampilkan semua email untuk alamat tertentu
 exports.getInbox = async (req, res) => {
   const emailAddress = req.params.email;
+
   try {
-    const emails = await Email.find({ to: emailAddress }).sort({ receivedAt: -1 });
+    const emails = await Email.find({ to: emailAddress }).sort({ createdAt: -1 });
     res.json(emails);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch inbox' });
+  }
+};
+
+// (Opsional) Tampilkan semua email dari semua pengguna
+exports.getAllEmails = async (req, res) => {
+  try {
+    const emails = await Email.find().sort({ createdAt: -1 });
+    res.json(emails);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch emails' });
   }
 };
