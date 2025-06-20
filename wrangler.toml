@@ -1,0 +1,14 @@
+name = "kucingmail-api"
+type = "javascript"
+
+account_id = "GANTI_DENGAN_ACCOUNT_ID_KAMU"
+workers_dev = false
+
+routes = [
+  "api.kucingmail.my.id/*"
+]
+
+zone_id = "GANTI_DENGAN_ZONE_ID_KAMU"
+
+[build]
+upload.format = "modules"
