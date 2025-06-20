@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { receiveEmail, getInbox } = require('../controllers/emailController');
+const { receiveEmail, getInbox, getAllEmails } = require('../controllers/emailController');
 
-router.post('/email', receiveEmail);
-router.get('/inbox/:email', getInbox);
+// POST email baru
+router.post('/emails', receiveEmail);
+
+// GET inbox berdasarkan alamat email
+router.get('/emails/:email', getInbox);
+
+// GET semua email (opsional)
+router.get('/emails', getAllEmails);
 
 module.exports = router;
