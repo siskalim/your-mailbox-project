@@ -1,7 +1,9 @@
 name = "kucingmail-api"
 main = "server.js"
 compatibility_date = "2025-06-20"
-node_compat = true
 
 [build]
 command = "npm install"
+
+[compatibility_flags]
+flags = ["nodejs_compat"]
