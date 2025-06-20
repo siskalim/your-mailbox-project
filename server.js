@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config(); // Load .env
+require('dotenv').config();
 
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
@@ -12,18 +12,14 @@ app.use(express.json());
 const emailRoutes = require('./routes/emailRoutes');
 app.use('/api', emailRoutes);
 
-// 🔧 CONNECT ke MongoDB Atlas via URI di .env
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 10000
-})
-.then(() => {
-  console.log('✅ MongoDB connected');
-  app.listen(process.env.PORT || 5000, () => {
-    console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ MongoDB connected');
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+      console.log(`🚀 Server running on port ${port}`);
+    });
+  })
+  .catch(err => {
+    console.error('❌ Connection failed:', err);
   });
-})
-.catch(err => {
-  console.error('❌ Connection failed:', err);
-});
