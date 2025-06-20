@@ -14,11 +14,9 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ Connection failed:', err));
 
-// Pakai serverless-express
 const { default: serverlessExpress } = require('@codegenie/serverless-express');
 const handler = serverlessExpress({ app });
 
-// Export sebagai Workers fetch handler
 export default {
   async fetch(request, env, ctx) {
     return await handler(request, env, ctx);
