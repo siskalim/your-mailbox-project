@@ -10,18 +10,17 @@ app.use(express.json());
 const emailRoutes = require('./routes/emailRoutes');
 app.use('/api', emailRoutes);
 
-// Koneksi ke MongoDB (gunakan atlas atau koneksi public)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ Connection failed:', err));
 
-// Worker-compatible export
+// Pakai serverless-express
 const { default: serverlessExpress } = require('@codegenie/serverless-express');
+const handler = serverlessExpress({ app });
 
+// Export sebagai Workers fetch handler
 export default {
   async fetch(request, env, ctx) {
-    return await serverlessExpress({
-      app
-    })(request, env, ctx);
+    return await handler(request, env, ctx);
   }
-}
+};
